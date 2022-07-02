@@ -1,0 +1,1 @@
+This is a game in progress. It is a platformer with all levels strictly bound to a 32x32 tile grid. This is a test in some aspects as to how much depth of gameplay can be added to a limited space while still preserving the run/jump aspect of platformers.
