@@ -257,10 +257,13 @@ class Elev(pygame.sprite.Sprite):
         left = auto()
         down = auto()
         right = auto()
-
+        
     def update(self):
         plat.downmoving = 0
+
+        plat.rect.y +=3
         charcollide = pygame.sprite.collide_rect(self, plat)
+        plat.rect.y -=3
 
         self.rect.y -= self.speed
         upcollidedtiles = pygame.sprite.spritecollide(self, circuittiles, False)
@@ -288,33 +291,29 @@ class Elev(pygame.sprite.Sprite):
         if self.direction == self.Direction.up:
             if len(upcanmove) == 0 and len(upcollidedtiles) > 0 and self.rect.top - self.speed >= 0:
                 self.rect.y -= self.speed
-                if not charcollide:
-                    if pygame.sprite.collide_rect(self, plat):
-                        plat.rect.y -= self.speed
+                if charcollide or pygame.sprite.collide_rect(self, plat):
+                    plat.rect.y -= self.speed
             else:
                 self.direction = self.Direction.left
         if self.direction == self.Direction.left:
             if len(leftcanmove) == 0 and len(leftcollidedtiles) > 0 and self.rect.left - self.speed >= 0:
                 self.rect.x -= self.speed
-                if not charcollide:
-                    if pygame.sprite.collide_rect(self, plat):
-                        plat.rect.x -= self.speed
+                if charcollide or pygame.sprite.collide_rect(self, plat):
+                    plat.rect.x -= self.speed
             else:
                 self.direction = self.Direction.down
         if self.direction == self.Direction.down:
             if len(downcanmove) == 0 and len(downcollidedtiles) > 0 and self.rect.bottom + self.speed <= height:
                 self.rect.y += self.speed
-                if not charcollide:
-                    if pygame.sprite.collide_rect(self, plat):
-                        plat.rect.y += self.speed
+                if charcollide or pygame.sprite.collide_rect(self, plat):
+                    plat.rect.y += self.speed
             else:
                 self.direction = self.Direction.right
         if self.direction == self.Direction.right:
             if len(rightcanmove) == 0 and len(rightcollidedtiles) > 0 and self.rect.right + self.speed <= width:
                 self.rect.x += self.speed
-                if not charcollide:
-                    if pygame.sprite.collide_rect(self, plat):
-                        plat.rect.x += self.speed
+                if  charcollide or pygame.sprite.collide_rect(self, plat):
+                    plat.rect.x += self.speed
             else:
                 self.direction = self.Direction.up
                 self.update()
